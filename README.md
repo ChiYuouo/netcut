@@ -1,6 +1,12 @@
 # netcut
 
-Hono + Cloudflare Workers + D1 backend for an encrypted network clipboard.
+Hono + Cloudflare Workers + D1 network clipboard with browser-side encryption.
+
+Open the deployed Worker URL to use the web page directly:
+
+```txt
+https://netcut.zyc630089289.workers.dev
+```
 
 ## Local development
 
@@ -22,7 +28,7 @@ Start the Worker locally:
 npm run dev
 ```
 
-The API will be available at `http://127.0.0.1:8787`.
+The page and API will be available at `http://127.0.0.1:8787`.
 
 ## API
 
