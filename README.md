@@ -8,6 +8,8 @@ Open the deployed Worker URL to use the web page directly:
 https://netcut.zyc630089289.workers.dev
 ```
 
+Enter a text key to open a private note. The same key opens the same saved text, and different keys open different text spaces.
+
 ## Local development
 
 Install dependencies:
@@ -44,6 +46,14 @@ Read a note:
 
 ```sh
 curl http://127.0.0.1:8787/api/notes/demo1234
+```
+
+Overwrite a note:
+
+```sh
+curl -X PUT http://127.0.0.1:8787/api/notes/demo1234 \
+  -H "Content-Type: application/json" \
+  -d '{"content":"encrypted-payload"}'
 ```
 
 ## Cloudflare D1 setup
