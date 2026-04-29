@@ -30,8 +30,10 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
       }
 
       body {
+        position: relative;
         margin: 0;
         min-height: 100vh;
+        overflow-x: hidden;
         background:
           linear-gradient(135deg, rgba(8, 117, 104, 0.11), transparent 34%),
           linear-gradient(315deg, rgba(49, 93, 144, 0.12), transparent 38%),
@@ -40,6 +42,20 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
         font-family:
           Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
           sans-serif;
+      }
+
+      body::before {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        content: "";
+        background:
+          linear-gradient(90deg, rgba(8, 117, 104, 0.06) 1px, transparent 1px),
+          linear-gradient(180deg, rgba(49, 93, 144, 0.05) 1px, transparent 1px);
+        background-size: 46px 46px;
+        mask-image: linear-gradient(120deg, rgba(0, 0, 0, 0.72), transparent 68%);
+        animation: drift-grid 18s linear infinite;
+        pointer-events: none;
       }
 
       button,
@@ -58,10 +74,16 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
         background: var(--teal);
         font-weight: 750;
         white-space: nowrap;
+        transition:
+          transform 160ms ease,
+          background 160ms ease,
+          box-shadow 160ms ease;
       }
 
       button:hover {
         background: var(--teal-dark);
+        box-shadow: 0 10px 24px rgba(8, 117, 104, 0.18);
+        transform: translateY(-1px);
       }
 
       button.secondary {
@@ -82,6 +104,7 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
 
       button.ghost:hover {
         background: rgba(49, 93, 144, 0.08);
+        box-shadow: none;
       }
 
       button:disabled {
@@ -97,6 +120,10 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
         color: var(--ink);
         background: #fbfdfc;
         outline: none;
+        transition:
+          border-color 160ms ease,
+          box-shadow 160ms ease,
+          background 160ms ease;
       }
 
       input:focus,
@@ -112,6 +139,8 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
       }
 
       .mark {
+        position: relative;
+        overflow: hidden;
         display: grid;
         width: 42px;
         height: 42px;
@@ -121,6 +150,15 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
         color: #eaf3ef;
         font-size: 22px;
         font-weight: 900;
+      }
+
+      .mark::after {
+        position: absolute;
+        inset: -35%;
+        content: "";
+        background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.32), transparent 70%);
+        transform: translateX(-90%) rotate(10deg);
+        animation: shine 4.8s ease-in-out infinite;
       }
 
       .brand-name {
@@ -140,6 +178,8 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
       }
 
       .gate {
+        position: relative;
+        z-index: 1;
         display: grid;
         min-height: 100vh;
         place-items: center;
@@ -147,6 +187,8 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
       }
 
       .gate-card {
+        position: relative;
+        overflow: hidden;
         width: min(460px, 100%);
         padding: 28px;
         border: 1px solid rgba(217, 224, 223, 0.88);
@@ -154,18 +196,64 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
         background: rgba(255, 255, 255, 0.9);
         box-shadow: var(--shadow);
         backdrop-filter: blur(18px);
+        animation: rise-in 520ms cubic-bezier(0.2, 0.72, 0.2, 1) both;
+      }
+
+      .gate-card::before {
+        position: absolute;
+        inset: 0 0 auto;
+        height: 3px;
+        content: "";
+        background: linear-gradient(90deg, var(--teal), var(--blue), var(--gold), var(--teal));
+        background-size: 220% 100%;
+        animation: flow-line 5.6s linear infinite;
       }
 
       .gate-card h1 {
         margin: 28px 0 10px;
-        font-size: 30px;
+        font-size: clamp(30px, 5vw, 42px);
         letter-spacing: 0;
+        line-height: 1.08;
       }
 
       .gate-card p {
         margin: 0 0 24px;
         color: var(--muted);
         line-height: 1.6;
+      }
+
+      .key-visual {
+        display: grid;
+        grid-template-columns: auto 1fr auto 1fr auto;
+        gap: 10px;
+        align-items: center;
+        margin: 20px 0 22px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .key-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: var(--gold);
+        box-shadow: 0 0 0 6px rgba(173, 116, 36, 0.13);
+        animation: pulse-dot 2.4s ease-in-out infinite;
+      }
+
+      .key-line {
+        position: relative;
+        height: 1px;
+        overflow: hidden;
+        background: var(--line);
+      }
+
+      .key-line::after {
+        position: absolute;
+        inset: 0;
+        content: "";
+        background: linear-gradient(90deg, transparent, var(--teal), transparent);
+        animation: scan-line 2.8s ease-in-out infinite;
       }
 
       .key-form {
@@ -188,6 +276,8 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
       }
 
       .app {
+        position: relative;
+        z-index: 1;
         display: none;
         width: min(1060px, calc(100vw - 32px));
         min-height: 100vh;
@@ -199,6 +289,7 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
         display: grid;
         grid-template-rows: auto 1fr;
         gap: 18px;
+        animation: rise-in 420ms cubic-bezier(0.2, 0.72, 0.2, 1) both;
       }
 
       .topbar {
@@ -208,10 +299,32 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
         gap: 14px;
       }
 
+      .top-left {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        min-width: 0;
+      }
+
       .top-actions {
         display: flex;
         align-items: center;
         gap: 8px;
+      }
+
+      .back-button {
+        display: inline-flex;
+        min-height: 40px;
+        align-items: center;
+        gap: 7px;
+        color: var(--ink);
+        background: rgba(255, 255, 255, 0.76);
+        border-color: var(--line);
+      }
+
+      .back-button:hover {
+        color: var(--teal-dark);
+        background: #fff;
       }
 
       .key-chip,
@@ -247,6 +360,8 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
       }
 
       .editor-panel {
+        position: relative;
+        overflow: hidden;
         display: grid;
         grid-template-rows: auto 1fr auto;
         min-height: calc(100vh - 142px);
@@ -255,6 +370,14 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
         border-radius: 8px;
         background: rgba(255, 255, 255, 0.9);
         box-shadow: var(--shadow);
+      }
+
+      .editor-panel::before {
+        position: absolute;
+        inset: 0 0 auto;
+        height: 3px;
+        content: "";
+        background: linear-gradient(90deg, var(--blue), var(--teal), var(--gold));
       }
 
       .editor-head {
@@ -289,6 +412,10 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
         font-size: 16px;
       }
 
+      textarea:focus {
+        background: #ffffff;
+      }
+
       .editor-foot {
         display: flex;
         align-items: center;
@@ -312,6 +439,71 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
         display: none;
       }
 
+      @keyframes rise-in {
+        from {
+          opacity: 0;
+          transform: translateY(14px) scale(0.985);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      @keyframes drift-grid {
+        from {
+          background-position: 0 0;
+        }
+
+        to {
+          background-position: 46px 46px;
+        }
+      }
+
+      @keyframes flow-line {
+        from {
+          background-position: 0% 50%;
+        }
+
+        to {
+          background-position: 220% 50%;
+        }
+      }
+
+      @keyframes shine {
+        0%,
+        55% {
+          transform: translateX(-90%) rotate(10deg);
+        }
+
+        75%,
+        100% {
+          transform: translateX(90%) rotate(10deg);
+        }
+      }
+
+      @keyframes pulse-dot {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+
+        50% {
+          transform: scale(1.25);
+        }
+      }
+
+      @keyframes scan-line {
+        from {
+          transform: translateX(-100%);
+        }
+
+        to {
+          transform: translateX(100%);
+        }
+      }
+
       @media (max-width: 720px) {
         .gate {
           padding: 16px;
@@ -324,6 +516,12 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
         .topbar,
         .editor-head,
         .editor-foot {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .top-left {
+          width: 100%;
           align-items: flex-start;
           flex-direction: column;
         }
@@ -350,6 +548,17 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
           min-height: 360px;
         }
       }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
     </style>
   </head>
   <body>
@@ -362,8 +571,15 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
             <span>netcut</span>
           </div>
         </div>
-        <h1>输入文字钥匙</h1>
-        <p>同一个钥匙会打开同一份文字。</p>
+        <h1>用钥匙取回文字</h1>
+        <p>给一段文字起个只有你知道的暗号。下次输入同一把钥匙，就能继续编辑它。</p>
+        <div class="key-visual" aria-hidden="true">
+          <span>写入</span>
+          <span class="key-line"></span>
+          <span class="key-dot"></span>
+          <span class="key-line"></span>
+          <span>取回</span>
+        </div>
         <form id="keyForm" class="key-form">
           <label>
             文字钥匙
@@ -377,11 +593,14 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
 
     <main id="app" class="app">
       <header class="topbar">
-        <div class="brand">
-          <div class="mark">K</div>
-          <div class="brand-name">
-            <strong>KeyCut</strong>
-            <span id="keyLabel">未打开</span>
+        <div class="top-left">
+          <button id="backButton" class="back-button" type="button">← 返回</button>
+          <div class="brand">
+            <div class="mark">K</div>
+            <div class="brand-name">
+              <strong>KeyCut</strong>
+              <span id="keyLabel">未打开</span>
+            </div>
           </div>
         </div>
         <div class="top-actions">
@@ -425,6 +644,7 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
       const gateStatus = document.querySelector('#gateStatus');
       const keyLabel = document.querySelector('#keyLabel');
       const keyChip = document.querySelector('#keyChip');
+      const backButton = document.querySelector('#backButton');
       const switchButton = document.querySelector('#switchButton');
       const content = document.querySelector('#content');
       const dirtyChip = document.querySelector('#dirtyChip');
@@ -449,7 +669,10 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
 
       saveButton.addEventListener('click', saveCurrent);
       downloadButton.addEventListener('click', downloadCurrent);
-      switchButton.addEventListener('click', () => {
+      backButton.addEventListener('click', returnToGate);
+      switchButton.addEventListener('click', returnToGate);
+
+      function returnToGate() {
         if (dirty && !confirm('当前内容未保存，确定切换钥匙吗？')) {
           return;
         }
@@ -459,8 +682,9 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
         content.value = '';
         gate.classList.remove('hidden');
         app.classList.remove('active');
+        setGateStatus('');
         keyInput.focus();
-      });
+      }
 
       window.addEventListener('beforeunload', (event) => {
         if (!dirty) return;
