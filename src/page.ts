@@ -3,26 +3,27 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>KeyCut</title>
+    <title>netcut</title>
     <link
       rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2315191f'/%3E%3Cpath d='M19 18h8v13l12-13h10L36 31.2 50 46H39.4L27 32.6V46h-8z' fill='%23f7efe3'/%3E%3C/svg%3E"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2315191f'/%3E%3Cpath d='M16 47V17h8.3l15.4 17.2V17H48v30h-8.2L24.4 29.8V47z' fill='%23eaf3ef'/%3E%3C/svg%3E"
     />
     <style>
       :root {
         color-scheme: light;
-        --bg: #f4f7f6;
+        --bg: #f7f8f5;
         --ink: #15191f;
-        --muted: #6f7681;
+        --muted: #707782;
         --panel: #ffffff;
-        --line: #d9e0df;
-        --soft: #e8eeee;
-        --teal: #087568;
-        --teal-dark: #07564d;
-        --gold: #ad7424;
+        --line: #dfe4e2;
+        --soft: #edf2ef;
+        --teal: #0a7d70;
+        --teal-dark: #075d54;
+        --gold: #b77a25;
         --red: #b42318;
-        --blue: #315d90;
-        --shadow: 0 22px 70px rgba(35, 31, 25, 0.12);
+        --blue: #365f8f;
+        --shadow: 0 24px 80px rgba(25, 30, 33, 0.11);
+        --glow: rgba(10, 125, 112, 0.18);
       }
 
       * {
@@ -35,8 +36,9 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
         min-height: 100vh;
         overflow-x: hidden;
         background:
-          linear-gradient(135deg, rgba(8, 117, 104, 0.11), transparent 34%),
-          linear-gradient(315deg, rgba(49, 93, 144, 0.12), transparent 38%),
+          radial-gradient(circle at 18% 12%, rgba(10, 125, 112, 0.14), transparent 32%),
+          radial-gradient(circle at 82% 18%, rgba(54, 95, 143, 0.12), transparent 30%),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(247, 248, 245, 0.92)),
           var(--bg);
         color: var(--ink);
         font-family:
@@ -50,10 +52,10 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
         z-index: 0;
         content: "";
         background:
-          linear-gradient(90deg, rgba(8, 117, 104, 0.06) 1px, transparent 1px),
-          linear-gradient(180deg, rgba(49, 93, 144, 0.05) 1px, transparent 1px);
-        background-size: 46px 46px;
-        mask-image: linear-gradient(120deg, rgba(0, 0, 0, 0.72), transparent 68%);
+          linear-gradient(90deg, rgba(10, 125, 112, 0.045) 1px, transparent 1px),
+          linear-gradient(180deg, rgba(54, 95, 143, 0.04) 1px, transparent 1px);
+        background-size: 52px 52px;
+        mask-image: linear-gradient(120deg, rgba(0, 0, 0, 0.62), transparent 72%);
         animation: drift-grid 18s linear infinite;
         pointer-events: none;
       }
@@ -129,50 +131,21 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
       input:focus,
       textarea:focus {
         border-color: var(--teal);
-        box-shadow: 0 0 0 4px rgba(8, 117, 104, 0.13);
+        box-shadow: 0 0 0 4px rgba(10, 125, 112, 0.13);
       }
 
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-      }
-
-      .mark {
-        position: relative;
-        overflow: hidden;
-        display: grid;
-        width: 42px;
-        height: 42px;
-        place-items: center;
-        border-radius: 10px;
-        background: var(--ink);
-        color: #eaf3ef;
-        font-size: 22px;
-        font-weight: 900;
-      }
-
-      .mark::after {
-        position: absolute;
-        inset: -35%;
-        content: "";
-        background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.32), transparent 70%);
-        transform: translateX(-90%) rotate(10deg);
-        animation: shine 4.8s ease-in-out infinite;
-      }
-
-      .brand-name {
+      .page-title {
         display: grid;
         gap: 2px;
       }
 
-      .brand-name strong {
-        font-size: 25px;
+      .page-title strong {
+        font-size: 24px;
         line-height: 1;
         letter-spacing: 0;
       }
 
-      .brand-name span {
+      .page-title span {
         color: var(--muted);
         font-size: 13px;
       }
@@ -189,76 +162,33 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
       .gate-card {
         position: relative;
         overflow: hidden;
-        width: min(460px, 100%);
-        padding: 28px;
-        border: 1px solid rgba(217, 224, 223, 0.88);
-        border-radius: 8px;
-        background: rgba(255, 255, 255, 0.9);
+        width: min(520px, 100%);
+        padding: 34px;
+        border: 1px solid rgba(223, 228, 226, 0.9);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.82);
         box-shadow: var(--shadow);
-        backdrop-filter: blur(18px);
+        backdrop-filter: blur(22px);
         animation: rise-in 520ms cubic-bezier(0.2, 0.72, 0.2, 1) both;
       }
 
-      .gate-card::before {
-        position: absolute;
-        inset: 0 0 auto;
-        height: 3px;
-        content: "";
-        background: linear-gradient(90deg, var(--teal), var(--blue), var(--gold), var(--teal));
-        background-size: 220% 100%;
-        animation: flow-line 5.6s linear infinite;
-      }
-
       .gate-card h1 {
-        margin: 28px 0 10px;
-        font-size: clamp(30px, 5vw, 42px);
+        margin: 0 0 10px;
+        font-size: clamp(32px, 5vw, 48px);
         letter-spacing: 0;
         line-height: 1.08;
       }
 
       .gate-card p {
-        margin: 0 0 24px;
+        width: min(390px, 100%);
+        margin: 0 0 28px;
         color: var(--muted);
         line-height: 1.6;
       }
 
-      .key-visual {
-        display: grid;
-        grid-template-columns: auto 1fr auto 1fr auto;
-        gap: 10px;
-        align-items: center;
-        margin: 20px 0 22px;
-        color: var(--muted);
-        font-size: 13px;
-      }
-
-      .key-dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 999px;
-        background: var(--gold);
-        box-shadow: 0 0 0 6px rgba(173, 116, 36, 0.13);
-        animation: pulse-dot 2.4s ease-in-out infinite;
-      }
-
-      .key-line {
-        position: relative;
-        height: 1px;
-        overflow: hidden;
-        background: var(--line);
-      }
-
-      .key-line::after {
-        position: absolute;
-        inset: 0;
-        content: "";
-        background: linear-gradient(90deg, transparent, var(--teal), transparent);
-        animation: scan-line 2.8s ease-in-out infinite;
-      }
-
       .key-form {
         display: grid;
-        gap: 12px;
+        gap: 14px;
       }
 
       .key-form label,
@@ -270,19 +200,37 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
       }
 
       .key-form input {
-        min-height: 48px;
-        padding: 0 13px;
+        min-height: 54px;
+        padding: 0 15px;
         font-size: 18px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.78);
+      }
+
+      .gate-card::after {
+        position: absolute;
+        right: -56px;
+        bottom: -72px;
+        width: 210px;
+        height: 210px;
+        border-radius: 999px;
+        content: "";
+        background:
+          radial-gradient(circle, rgba(10, 125, 112, 0.16), transparent 58%),
+          conic-gradient(from 90deg, transparent, rgba(183, 122, 37, 0.16), transparent);
+        filter: blur(1px);
+        animation: slow-spin 18s linear infinite;
+        pointer-events: none;
       }
 
       .app {
         position: relative;
         z-index: 1;
         display: none;
-        width: min(1060px, calc(100vw - 32px));
+        width: min(1180px, calc(100vw - 32px));
         min-height: 100vh;
         margin: 0 auto;
-        padding: 24px 0 34px;
+        padding: 22px 0 34px;
       }
 
       .app.active {
@@ -297,6 +245,7 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
         align-items: center;
         justify-content: space-between;
         gap: 14px;
+        margin-bottom: 4px;
       }
 
       .top-left {
@@ -314,12 +263,13 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
 
       .back-button {
         display: inline-flex;
-        min-height: 40px;
+        min-height: 42px;
         align-items: center;
         gap: 7px;
         color: var(--ink);
         background: rgba(255, 255, 255, 0.76);
         border-color: var(--line);
+        box-shadow: 0 10px 30px rgba(21, 25, 31, 0.06);
       }
 
       .back-button:hover {
@@ -348,6 +298,7 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
         color: #7c4f0b;
         border-color: rgba(185, 134, 43, 0.38);
         background: rgba(255, 243, 214, 0.78);
+        animation: nudge-in 180ms ease both;
       }
 
       .dirty-chip.active {
@@ -365,19 +316,12 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
         display: grid;
         grid-template-rows: auto 1fr auto;
         min-height: calc(100vh - 142px);
-        padding: 18px;
-        border: 1px solid rgba(217, 224, 223, 0.92);
-        border-radius: 8px;
-        background: rgba(255, 255, 255, 0.9);
+        padding: 24px;
+        border: 1px solid rgba(223, 228, 226, 0.92);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.86);
         box-shadow: var(--shadow);
-      }
-
-      .editor-panel::before {
-        position: absolute;
-        inset: 0 0 auto;
-        height: 3px;
-        content: "";
-        background: linear-gradient(90deg, var(--blue), var(--teal), var(--gold));
+        backdrop-filter: blur(18px);
       }
 
       .editor-head {
@@ -407,9 +351,13 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
       textarea {
         min-height: 440px;
         resize: vertical;
-        padding: 16px;
+        padding: 18px;
         line-height: 1.62;
         font-size: 16px;
+        border-radius: 16px;
+        background:
+          linear-gradient(rgba(255, 255, 255, 0.93), rgba(255, 255, 255, 0.93)),
+          linear-gradient(135deg, rgba(10, 125, 112, 0.12), rgba(54, 95, 143, 0.08));
       }
 
       textarea:focus {
@@ -422,6 +370,34 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
         justify-content: space-between;
         gap: 12px;
         margin-top: 12px;
+      }
+
+      .save-nudge {
+        display: none;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: 12px;
+        padding: 12px;
+        border: 1px solid rgba(183, 122, 37, 0.28);
+        border-radius: 14px;
+        color: #68420d;
+        background: rgba(255, 247, 231, 0.86);
+        animation: nudge-in 180ms ease both;
+      }
+
+      .save-nudge.active {
+        display: flex;
+      }
+
+      .nudge-actions {
+        display: flex;
+        gap: 8px;
+      }
+
+      .nudge-actions button {
+        min-height: 34px;
+        padding: 0 11px;
       }
 
       .count {
@@ -461,46 +437,25 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
         }
       }
 
-      @keyframes flow-line {
+      @keyframes slow-spin {
         from {
-          background-position: 0% 50%;
+          transform: rotate(0deg);
         }
 
         to {
-          background-position: 220% 50%;
+          transform: rotate(360deg);
         }
       }
 
-      @keyframes shine {
-        0%,
-        55% {
-          transform: translateX(-90%) rotate(10deg);
-        }
-
-        75%,
-        100% {
-          transform: translateX(90%) rotate(10deg);
-        }
-      }
-
-      @keyframes pulse-dot {
-        0%,
-        100% {
-          transform: scale(1);
-        }
-
-        50% {
-          transform: scale(1.25);
-        }
-      }
-
-      @keyframes scan-line {
+      @keyframes nudge-in {
         from {
-          transform: translateX(-100%);
+          opacity: 0;
+          transform: translateY(-4px);
         }
 
         to {
-          transform: translateX(100%);
+          opacity: 1;
+          transform: translateY(0);
         }
       }
 
@@ -564,22 +519,8 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
   <body>
     <section id="gate" class="gate">
       <div class="gate-card">
-        <div class="brand">
-          <div class="mark">K</div>
-          <div class="brand-name">
-            <strong>KeyCut</strong>
-            <span>netcut</span>
-          </div>
-        </div>
-        <h1>用钥匙取回文字</h1>
-        <p>给一段文字起个只有你知道的暗号。下次输入同一把钥匙，就能继续编辑它。</p>
-        <div class="key-visual" aria-hidden="true">
-          <span>写入</span>
-          <span class="key-line"></span>
-          <span class="key-dot"></span>
-          <span class="key-line"></span>
-          <span>取回</span>
-        </div>
+        <h1>打开文字</h1>
+        <p>输入钥匙，继续编辑对应内容。</p>
         <form id="keyForm" class="key-form">
           <label>
             文字钥匙
@@ -595,12 +536,9 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
       <header class="topbar">
         <div class="top-left">
           <button id="backButton" class="back-button" type="button">← 返回</button>
-          <div class="brand">
-            <div class="mark">K</div>
-            <div class="brand-name">
-              <strong>KeyCut</strong>
-              <span id="keyLabel">未打开</span>
-            </div>
+          <div class="page-title">
+            <strong>netcut</strong>
+            <span id="keyLabel">未打开</span>
           </div>
         </div>
         <div class="top-actions">
@@ -623,6 +561,14 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
             <span class="hidden">内容</span>
             <textarea id="content" placeholder="输入或编辑这个钥匙下保存的文字"></textarea>
           </label>
+
+          <div id="saveNudge" class="save-nudge">
+            <span id="saveNudgeText">还有未保存的修改</span>
+            <div class="nudge-actions">
+              <button id="discardButton" class="secondary" type="button">放弃</button>
+              <button id="nudgeSaveButton" type="button">保存</button>
+            </div>
+          </div>
 
           <div class="editor-foot">
             <div id="count" class="count">0 字符</div>
@@ -650,12 +596,17 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
       const dirtyChip = document.querySelector('#dirtyChip');
       const appStatus = document.querySelector('#appStatus');
       const count = document.querySelector('#count');
+      const saveNudge = document.querySelector('#saveNudge');
+      const saveNudgeText = document.querySelector('#saveNudgeText');
+      const discardButton = document.querySelector('#discardButton');
+      const nudgeSaveButton = document.querySelector('#nudgeSaveButton');
       const downloadButton = document.querySelector('#downloadButton');
       const saveButton = document.querySelector('#saveButton');
 
       let active = null;
       let savedText = '';
       let dirty = false;
+      let pendingReturn = false;
 
       keyForm.addEventListener('submit', async (event) => {
         event.preventDefault();
@@ -668,16 +619,30 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
       });
 
       saveButton.addEventListener('click', saveCurrent);
+      nudgeSaveButton.addEventListener('click', saveCurrent);
+      discardButton.addEventListener('click', () => {
+        content.value = savedText;
+        updateCount();
+        setDirty(false);
+        goToGate();
+      });
       downloadButton.addEventListener('click', downloadCurrent);
       backButton.addEventListener('click', returnToGate);
       switchButton.addEventListener('click', returnToGate);
 
       function returnToGate() {
-        if (dirty && !confirm('当前内容未保存，确定切换钥匙吗？')) {
+        if (dirty) {
+          pendingReturn = true;
+          showSaveNudge('修改还没保存。保存后会返回，也可以放弃这次修改。');
           return;
         }
+        goToGate();
+      }
+
+      function goToGate() {
         active = null;
         savedText = '';
+        pendingReturn = false;
         setDirty(false);
         content.value = '';
         gate.classList.remove('hidden');
@@ -685,12 +650,6 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
         setGateStatus('');
         keyInput.focus();
       }
-
-      window.addEventListener('beforeunload', (event) => {
-        if (!dirty) return;
-        event.preventDefault();
-        event.returnValue = '';
-      });
 
       async function openKey() {
         const secret = keyInput.value.trim();
@@ -750,9 +709,13 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
             throw new Error(result.message || '保存失败');
           }
 
+          const shouldReturn = pendingReturn;
           savedText = content.value;
           setDirty(false);
           setAppStatus('已保存 ' + new Date().toLocaleTimeString());
+          if (shouldReturn) {
+            goToGate();
+          }
         } catch (error) {
           setAppStatus(error.message || '保存失败', true);
         } finally {
@@ -776,7 +739,7 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = 'keycut-' + (active ? active.id.slice(0, 8) : 'text') + '.txt';
+        link.download = 'netcut-' + (active ? active.id.slice(0, 8) : 'text') + '.txt';
         document.body.appendChild(link);
         link.click();
         link.remove();
@@ -787,6 +750,17 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
       function setDirty(value) {
         dirty = value;
         dirtyChip.classList.toggle('active', dirty);
+        saveNudge.classList.toggle('active', dirty);
+        if (dirty) {
+          showSaveNudge('还有未保存的修改');
+        } else {
+          pendingReturn = false;
+        }
+      }
+
+      function showSaveNudge(message) {
+        saveNudgeText.textContent = message;
+        saveNudge.classList.add('active');
       }
 
       function updateCount() {
