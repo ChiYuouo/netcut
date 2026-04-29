@@ -6,8 +6,8 @@
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "netcut-db",
-      "database_id": "00000000-0000-0000-0000-000000000000"
+      "database_name": "notes",
+      "database_id": "40d957ea-58ee-4673-98cc-677efa4ebbc9"
     }
   ],
   "triggers": {

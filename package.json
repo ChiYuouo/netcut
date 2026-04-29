@@ -7,8 +7,8 @@
     "dev": "wrangler dev --local",
     "deploy": "wrangler deploy",
     "typecheck": "tsc --noEmit",
-    "db:migrate:local": "wrangler d1 migrations apply netcut-db --local",
-    "db:migrate:remote": "wrangler d1 migrations apply netcut-db --remote"
+    "db:migrate:local": "wrangler d1 migrations apply notes --local",
+    "db:migrate:remote": "wrangler d1 migrations apply notes --remote"
   },
   "dependencies": {
     "hono": "^4.7.4"
