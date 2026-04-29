@@ -1,0 +1,21 @@
+{
+  "name": "netcut",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev --local",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc --noEmit",
+    "db:migrate:local": "wrangler d1 migrations apply netcut-db --local",
+    "db:migrate:remote": "wrangler d1 migrations apply netcut-db --remote"
+  },
+  "dependencies": {
+    "hono": "^4.7.4"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250404.0",
+    "typescript": "^5.8.2",
+    "wrangler": "^4.4.0"
+  }
+}

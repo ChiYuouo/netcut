@@ -1,0 +1,16 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "netcut",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-04-29",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "netcut-db",
+      "database_id": "00000000-0000-0000-0000-000000000000"
+    }
+  ],
+  "triggers": {
+    "crons": ["0 19 * * *"]
+  }
+}
