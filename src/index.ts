@@ -18,6 +18,13 @@ app.use(
   }),
 );
 
+app.get('/', (c) =>
+  c.json({
+    name: 'netcut',
+    endpoints: ['/api/health', '/api/notes'],
+  }),
+);
+
 app.get('/api/health', (c) => c.json({ success: true }));
 
 app.post('/api/notes', async (c) => {
