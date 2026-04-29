@@ -11,18 +11,18 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
     <style>
       :root {
         color-scheme: light;
-        --bg: #f7f8f5;
+        --bg: #f6f3ef;
         --ink: #15191f;
         --muted: #707782;
-        --panel: #ffffff;
-        --line: #dfe4e2;
-        --soft: #edf2ef;
-        --teal: #0a7d70;
-        --teal-dark: #075d54;
-        --gold: #b77a25;
+        --panel: #fffdf9;
+        --line: #e2ded8;
+        --soft: #efece5;
+        --teal: #0b796f;
+        --teal-dark: #075c55;
+        --gold: #b9792a;
         --red: #b42318;
         --blue: #365f8f;
-        --shadow: 0 24px 80px rgba(25, 30, 33, 0.11);
+        --shadow: 0 24px 80px rgba(36, 30, 24, 0.12);
         --glow: rgba(10, 125, 112, 0.18);
       }
 
@@ -36,9 +36,9 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
         min-height: 100vh;
         overflow-x: hidden;
         background:
-          radial-gradient(circle at 18% 12%, rgba(10, 125, 112, 0.14), transparent 32%),
-          radial-gradient(circle at 82% 18%, rgba(54, 95, 143, 0.12), transparent 30%),
-          linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(247, 248, 245, 0.92)),
+          radial-gradient(circle at 12% 16%, rgba(11, 121, 111, 0.16), transparent 30%),
+          radial-gradient(circle at 86% 12%, rgba(185, 121, 42, 0.13), transparent 32%),
+          linear-gradient(135deg, rgba(255, 255, 255, 0.78), rgba(246, 243, 239, 0.92)),
           var(--bg);
         color: var(--ink);
         font-family:
@@ -52,8 +52,8 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
         z-index: 0;
         content: "";
         background:
-          linear-gradient(90deg, rgba(10, 125, 112, 0.045) 1px, transparent 1px),
-          linear-gradient(180deg, rgba(54, 95, 143, 0.04) 1px, transparent 1px);
+          linear-gradient(90deg, rgba(11, 121, 111, 0.04) 1px, transparent 1px),
+          linear-gradient(180deg, rgba(185, 121, 42, 0.035) 1px, transparent 1px);
         background-size: 52px 52px;
         mask-image: linear-gradient(120deg, rgba(0, 0, 0, 0.62), transparent 72%);
         animation: drift-grid 18s linear infinite;
@@ -135,17 +135,50 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
       }
 
       .page-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .logo {
+        position: relative;
+        display: grid;
+        width: 42px;
+        height: 42px;
+        flex: 0 0 auto;
+        place-items: center;
+        border-radius: 13px;
+        color: #ecf7f3;
+        background:
+          linear-gradient(145deg, rgba(255, 255, 255, 0.09), transparent),
+          #15191f;
+        box-shadow: 0 14px 32px rgba(21, 25, 31, 0.18);
+        font-weight: 900;
+      }
+
+      .logo::before {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        content: "";
+        background: var(--teal);
+        transform: translate(9px, -9px);
+        box-shadow: 0 0 0 5px rgba(11, 121, 111, 0.18);
+      }
+
+      .title-copy {
         display: grid;
         gap: 2px;
       }
 
-      .page-title strong {
+      .title-copy strong {
         font-size: 24px;
         line-height: 1;
         letter-spacing: 0;
       }
 
-      .page-title span {
+      .title-copy span {
         color: var(--muted);
         font-size: 13px;
       }
@@ -166,14 +199,16 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
         padding: 34px;
         border: 1px solid rgba(223, 228, 226, 0.9);
         border-radius: 18px;
-        background: rgba(255, 255, 255, 0.82);
+        background:
+          linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(255, 253, 249, 0.78)),
+          rgba(255, 255, 255, 0.82);
         box-shadow: var(--shadow);
         backdrop-filter: blur(22px);
         animation: rise-in 520ms cubic-bezier(0.2, 0.72, 0.2, 1) both;
       }
 
       .gate-card h1 {
-        margin: 0 0 10px;
+        margin: 22px 0 10px;
         font-size: clamp(32px, 5vw, 48px);
         letter-spacing: 0;
         line-height: 1.08;
@@ -181,7 +216,7 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
 
       .gate-card p {
         width: min(390px, 100%);
-        margin: 0 0 28px;
+        margin: 0 0 26px;
         color: var(--muted);
         line-height: 1.6;
       }
@@ -223,6 +258,11 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
         pointer-events: none;
       }
 
+      .gate-card .page-title {
+        position: relative;
+        z-index: 1;
+      }
+
       .app {
         position: relative;
         z-index: 1;
@@ -258,7 +298,8 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
       .top-actions {
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 10px;
+        min-width: 0;
       }
 
       .back-button {
@@ -277,32 +318,56 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
         background: #fff;
       }
 
-      .key-chip,
-      .dirty-chip {
+      .key-chip {
         display: inline-flex;
-        min-height: 32px;
+        min-height: 42px;
         align-items: center;
+        gap: 8px;
         border-radius: 999px;
-        padding: 0 11px;
+        padding: 0 13px;
         font-size: 13px;
-        border: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.78);
-        max-width: 240px;
+        color: var(--ink);
+        border: 1px solid rgba(226, 222, 216, 0.88);
+        background: rgba(255, 253, 249, 0.84);
+        box-shadow: 0 10px 30px rgba(36, 30, 24, 0.07);
+        max-width: min(42vw, 520px);
+        min-width: 0;
+      }
+
+      .key-chip-text {
+        min-width: 0;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
       }
 
-      .dirty-chip {
-        display: none;
-        color: #7c4f0b;
-        border-color: rgba(185, 134, 43, 0.38);
-        background: rgba(255, 243, 214, 0.78);
-        animation: nudge-in 180ms ease both;
+      .key-chip::before {
+        width: 7px;
+        height: 7px;
+        flex: 0 0 auto;
+        border-radius: 999px;
+        content: "";
+        background: var(--teal);
+        box-shadow: 0 0 0 4px rgba(11, 121, 111, 0.13);
       }
 
-      .dirty-chip.active {
+      .state-chip {
         display: inline-flex;
+        min-height: 42px;
+        align-items: center;
+        border-radius: 999px;
+        padding: 0 13px;
+        color: var(--muted);
+        border: 1px solid transparent;
+        background: rgba(255, 255, 255, 0.42);
+        font-size: 13px;
+        white-space: nowrap;
+      }
+
+      .state-chip.unsaved {
+        color: #79500f;
+        border-color: rgba(185, 121, 42, 0.28);
+        background: rgba(255, 246, 229, 0.78);
       }
 
       .workspace {
@@ -318,8 +383,10 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
         min-height: calc(100vh - 142px);
         padding: 24px;
         border: 1px solid rgba(223, 228, 226, 0.92);
-        border-radius: 18px;
-        background: rgba(255, 255, 255, 0.86);
+        border-radius: 22px;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 253, 249, 0.84)),
+          rgba(255, 255, 255, 0.86);
         box-shadow: var(--shadow);
         backdrop-filter: blur(18px);
       }
@@ -348,6 +415,10 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
         color: var(--red);
       }
 
+      .status:empty {
+        display: none;
+      }
+
       textarea {
         min-height: 440px;
         resize: vertical;
@@ -370,34 +441,6 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
         justify-content: space-between;
         gap: 12px;
         margin-top: 12px;
-      }
-
-      .save-nudge {
-        display: none;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-        margin-top: 12px;
-        padding: 12px;
-        border: 1px solid rgba(183, 122, 37, 0.28);
-        border-radius: 14px;
-        color: #68420d;
-        background: rgba(255, 247, 231, 0.86);
-        animation: nudge-in 180ms ease both;
-      }
-
-      .save-nudge.active {
-        display: flex;
-      }
-
-      .nudge-actions {
-        display: flex;
-        gap: 8px;
-      }
-
-      .nudge-actions button {
-        min-height: 34px;
-        padding: 0 11px;
       }
 
       .count {
@@ -486,7 +529,11 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
           width: 100%;
         }
 
-        .top-actions button,
+        .key-chip {
+          max-width: 100%;
+          flex: 1;
+        }
+
         .editor-actions button {
           flex: 1;
         }
@@ -519,6 +566,13 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
   <body>
     <section id="gate" class="gate">
       <div class="gate-card">
+        <div class="page-title">
+          <span class="logo">n</span>
+          <div class="title-copy">
+            <strong>netcut</strong>
+            <span>钥匙剪贴板</span>
+          </div>
+        </div>
         <h1>打开文字</h1>
         <p>输入钥匙，继续编辑对应内容。</p>
         <form id="keyForm" class="key-form">
@@ -537,13 +591,16 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
         <div class="top-left">
           <button id="backButton" class="back-button" type="button">← 返回</button>
           <div class="page-title">
-            <strong>netcut</strong>
-            <span id="keyLabel">未打开</span>
+            <span class="logo">n</span>
+            <div class="title-copy">
+              <strong>netcut</strong>
+              <span id="keyLabel">已打开</span>
+            </div>
           </div>
         </div>
         <div class="top-actions">
-          <span id="keyChip" class="key-chip"></span>
-          <button id="switchButton" class="ghost" type="button">切换钥匙</button>
+          <span id="keyChip" class="key-chip"><span id="keyChipText" class="key-chip-text"></span></span>
+          <span id="stateChip" class="state-chip">已读取</span>
         </div>
       </header>
 
@@ -552,7 +609,6 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
           <div class="editor-head">
             <div>
               <h2>文字内容</h2>
-              <span id="dirtyChip" class="dirty-chip">未保存</span>
             </div>
             <div id="appStatus" class="status">就绪</div>
           </div>
@@ -561,14 +617,6 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
             <span class="hidden">内容</span>
             <textarea id="content" placeholder="输入或编辑这个钥匙下保存的文字"></textarea>
           </label>
-
-          <div id="saveNudge" class="save-nudge">
-            <span id="saveNudgeText">还有未保存的修改</span>
-            <div class="nudge-actions">
-              <button id="discardButton" class="secondary" type="button">放弃</button>
-              <button id="nudgeSaveButton" type="button">保存</button>
-            </div>
-          </div>
 
           <div class="editor-foot">
             <div id="count" class="count">0 字符</div>
@@ -589,24 +637,18 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
       const openButton = document.querySelector('#openButton');
       const gateStatus = document.querySelector('#gateStatus');
       const keyLabel = document.querySelector('#keyLabel');
-      const keyChip = document.querySelector('#keyChip');
+      const keyChipText = document.querySelector('#keyChipText');
+      const stateChip = document.querySelector('#stateChip');
       const backButton = document.querySelector('#backButton');
-      const switchButton = document.querySelector('#switchButton');
       const content = document.querySelector('#content');
-      const dirtyChip = document.querySelector('#dirtyChip');
       const appStatus = document.querySelector('#appStatus');
       const count = document.querySelector('#count');
-      const saveNudge = document.querySelector('#saveNudge');
-      const saveNudgeText = document.querySelector('#saveNudgeText');
-      const discardButton = document.querySelector('#discardButton');
-      const nudgeSaveButton = document.querySelector('#nudgeSaveButton');
       const downloadButton = document.querySelector('#downloadButton');
       const saveButton = document.querySelector('#saveButton');
 
       let active = null;
       let savedText = '';
       let dirty = false;
-      let pendingReturn = false;
 
       keyForm.addEventListener('submit', async (event) => {
         event.preventDefault();
@@ -619,21 +661,13 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
       });
 
       saveButton.addEventListener('click', saveCurrent);
-      nudgeSaveButton.addEventListener('click', saveCurrent);
-      discardButton.addEventListener('click', () => {
-        content.value = savedText;
-        updateCount();
-        setDirty(false);
-        goToGate();
-      });
       downloadButton.addEventListener('click', downloadCurrent);
       backButton.addEventListener('click', returnToGate);
-      switchButton.addEventListener('click', returnToGate);
 
       function returnToGate() {
         if (dirty) {
-          pendingReturn = true;
-          showSaveNudge('修改还没保存。保存后会返回，也可以放弃这次修改。');
+          setAppStatus('请先保存当前修改', true);
+          content.focus();
           return;
         }
         goToGate();
@@ -642,7 +676,6 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
       function goToGate() {
         active = null;
         savedText = '';
-        pendingReturn = false;
         setDirty(false);
         content.value = '';
         gate.classList.remove('hidden');
@@ -709,13 +742,9 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
             throw new Error(result.message || '保存失败');
           }
 
-          const shouldReturn = pendingReturn;
           savedText = content.value;
           setDirty(false);
           setAppStatus('已保存 ' + new Date().toLocaleTimeString());
-          if (shouldReturn) {
-            goToGate();
-          }
         } catch (error) {
           setAppStatus(error.message || '保存失败', true);
         } finally {
@@ -728,7 +757,8 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
         app.classList.add('active');
         content.value = text;
         keyLabel.textContent = '已打开';
-        keyChip.textContent = active.secret;
+        keyChipText.textContent = active.secret;
+        keyChipText.title = active.secret;
         setDirty(false);
         updateCount();
         content.focus();
@@ -749,18 +779,13 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
 
       function setDirty(value) {
         dirty = value;
-        dirtyChip.classList.toggle('active', dirty);
-        saveNudge.classList.toggle('active', dirty);
         if (dirty) {
-          showSaveNudge('还有未保存的修改');
+          stateChip.textContent = '未保存';
+          stateChip.classList.add('unsaved');
         } else {
-          pendingReturn = false;
+          stateChip.textContent = '已保存';
+          stateChip.classList.remove('unsaved');
         }
-      }
-
-      function showSaveNudge(message) {
-        saveNudgeText.textContent = message;
-        saveNudge.classList.add('active');
       }
 
       function updateCount() {
@@ -775,6 +800,10 @@ export const KEY_PAGE_HTML = String.raw`<!doctype html>
       function setAppStatus(message, isError) {
         appStatus.textContent = message;
         appStatus.classList.toggle('error', Boolean(isError));
+        if (!dirty && (message === '已读取' || message === '新钥匙')) {
+          stateChip.textContent = message;
+          stateChip.classList.remove('unsaved');
+        }
       }
 
       async function deriveMaterial(secret) {
