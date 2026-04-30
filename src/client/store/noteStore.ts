@@ -39,13 +39,11 @@ export type SavedWorkspace = {
 type NoteStore = {
   tabs: NoteTab[];
   activeId: string;
-  lastSelectedTTL: TtlPreset;
   addTab: (noteId: string) => NoteTab;
   ensureWorkspace: (noteId: string) => NoteTab;
   replaceWorkspace: (noteId: string, payload: SavedWorkspace, patch: Partial<NoteTab>) => void;
   closeTab: (localId: string) => void;
   setActive: (localId: string) => void;
-  setLastSelectedTTL: (ttl: TtlPreset) => void;
   updateActive: (patch: Partial<NoteTab>) => void;
   updateWorkspace: (noteId: string, patch: Partial<NoteTab>) => void;
   updateTab: (localId: string, patch: Partial<NoteTab>) => void;
@@ -63,11 +61,10 @@ export const ttlOptions: Array<{ value: TtlPreset; label: string; seconds: numbe
 export const useNoteStore = create<NoteStore>((set, get) => ({
   tabs: [],
   activeId: '',
-  lastSelectedTTL: '1d',
 
   addTab: (noteId) => {
     const index = get().tabs.filter((item) => item.noteId === noteId).length + 1;
-    const tab = createBlankTab(noteId, `标签 ${index}`, undefined, get().lastSelectedTTL);
+    const tab = createBlankTab(noteId, `标签 ${index}`);
     set((state) => ({ tabs: [...state.tabs, tab], activeId: tab.localId }));
     return tab;
   },
@@ -79,13 +76,13 @@ export const useNoteStore = create<NoteStore>((set, get) => ({
       return existing;
     }
 
-    const tab = createBlankTab(noteId, '标签 1', undefined, get().lastSelectedTTL);
+    const tab = createBlankTab(noteId, '标签 1');
     set((state) => ({ tabs: [...state.tabs, tab], activeId: tab.localId }));
     return tab;
   },
 
   replaceWorkspace: (noteId, payload, patch) => {
-    const ttl = patch.ttl || get().lastSelectedTTL;
+    const ttl = patch.ttl || '1d';
     const workspaceTabs = payload.tabs.length > 0 ? payload.tabs : [{ pageId: createNoteId(), title: '标签 1', content: '' }];
     const nextTabs = workspaceTabs.map((item, index) => ({
       ...createBlankTab(noteId, item.title || `标签 ${index + 1}`, item.pageId, ttl),
@@ -102,7 +99,6 @@ export const useNoteStore = create<NoteStore>((set, get) => ({
     set((state) => ({
       tabs: [...state.tabs.filter((tab) => tab.noteId !== noteId), ...nextTabs],
       activeId: nextActive.localId,
-      lastSelectedTTL: ttl,
     }));
   },
 
@@ -124,8 +120,6 @@ export const useNoteStore = create<NoteStore>((set, get) => ({
 
   setActive: (localId) => set({ activeId: localId }),
 
-  setLastSelectedTTL: (ttl) => set({ lastSelectedTTL: ttl }),
-
   updateActive: (patch) => {
     const activeId = get().activeId;
     if (activeId) get().updateTab(activeId, patch);
@@ -134,14 +128,12 @@ export const useNoteStore = create<NoteStore>((set, get) => ({
   updateWorkspace: (noteId, patch) => {
     set((state) => ({
       tabs: state.tabs.map((tab) => (tab.noteId === noteId ? mergeTab(tab, patch) : tab)),
-      lastSelectedTTL: patch.ttl || state.lastSelectedTTL,
     }));
   },
 
   updateTab: (localId, patch) => {
     set((state) => ({
       tabs: state.tabs.map((tab) => (tab.localId === localId ? mergeTab(tab, patch) : tab)),
-      lastSelectedTTL: patch.ttl || state.lastSelectedTTL,
     }));
   },
 

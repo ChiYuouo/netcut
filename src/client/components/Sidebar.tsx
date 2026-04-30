@@ -111,7 +111,7 @@ export function Sidebar({
             </div>
           ) : (
             <div className="mt-3 rounded-lg border border-orange-200 bg-orange-50 px-3 py-2 text-sm font-semibold text-orange-700">
-              过期时间：{tab.expiresAt ? countdown : formatRemaining(tab.expiresAt)}
+              过期时间：{tab.expiresAt ? countdown : describePendingTtl(tab.ttl)}
             </div>
           )}
         </section>
@@ -191,4 +191,12 @@ function Meta({ label, value }: { label: string; value: string }) {
       <dd className="text-right text-slate-700">{value}</dd>
     </div>
   );
+}
+
+function describePendingTtl(ttl: TtlPreset): string {
+  if (ttl === '1h') return '保存后约 1小时 后过期';
+  if (ttl === '1d') return '保存后约 1天 后过期';
+  if (ttl === '3d') return '保存后约 3天 后过期';
+  if (ttl === 'forever') return '永久保留';
+  return formatRemaining(null);
 }
