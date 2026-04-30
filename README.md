@@ -2,7 +2,7 @@
 
 Hono + Cloudflare Workers + D1 network clipboard with browser-side encryption.
 
-中文文档见 [README.zh-CN.md](README.zh-CN.md)。
+中文文档见 [READMEzh-CN.md](README.zh-CN.md)。
 
 Open the deployed Worker URL to use the web page directly:
 
