@@ -1,0 +1,7 @@
+ALTER TABLE notes ADD COLUMN iv TEXT NOT NULL DEFAULT '';
+ALTER TABLE notes ADD COLUMN permission TEXT NOT NULL DEFAULT 'readonly';
+ALTER TABLE notes ADD COLUMN burn_after_read INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE notes ADD COLUMN updated_at DATETIME;
+
+UPDATE notes
+SET updated_at = COALESCE(updated_at, created_at, CURRENT_TIMESTAMP);

@@ -4,18 +4,36 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "wrangler dev --local",
-    "deploy": "wrangler deploy",
+    "dev": "npm run build && wrangler dev --local",
+    "dev:assets": "vite build --watch",
+    "worker:dev": "wrangler dev --local",
+    "build": "vite build",
+    "deploy": "npm run build && wrangler deploy",
     "typecheck": "tsc --noEmit",
     "db:migrate:local": "wrangler d1 migrations apply notes --local",
     "db:migrate:remote": "wrangler d1 migrations apply notes --remote"
   },
   "dependencies": {
-    "hono": "^4.7.4"
+    "dompurify": "^3.4.1",
+    "hono": "^4.7.4",
+    "lucide-react": "^1.14.0",
+    "marked": "^18.0.2",
+    "qrcode.react": "^4.2.0",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "react-router-dom": "^7.14.2",
+    "zustand": "^5.0.12"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250404.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "autoprefixer": "^10.5.0",
+    "postcss": "^8.5.12",
+    "tailwindcss": "^3.4.17",
     "typescript": "^5.8.2",
+    "vite": "^8.0.10",
     "wrangler": "^4.4.0"
   }
 }

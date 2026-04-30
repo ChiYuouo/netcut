@@ -1,0 +1,1 @@
+ALTER TABLE notes ADD COLUMN password_protected INTEGER NOT NULL DEFAULT 0;
