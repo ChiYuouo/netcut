@@ -5,14 +5,13 @@ import { EditorPane } from '../components/EditorPane';
 import { Header } from '../components/Header';
 import { PasswordDialog } from '../components/PasswordDialog';
 import { Sidebar } from '../components/Sidebar';
-import { ttlOptions, useNoteStore, type Permission, type SavedWorkspace, type TtlPreset } from '../store/noteStore';
+import { ttlOptions, useNoteStore, type SavedWorkspace, type TtlPreset } from '../store/noteStore';
 import { decryptTextWithPassword, encryptTextWithPassword, workspaceSecret } from '../utils/crypto';
 import { formatRemaining } from '../utils/time';
 
 type SaveOptions = {
   passwordOverride?: string;
   passwordProtectedOverride?: boolean;
-  permissionOverride?: Permission;
   ttlOverride?: TtlPreset;
 };
 
@@ -40,7 +39,7 @@ export function WorkspaceView() {
   const [tick, setTick] = useState(0);
 
   const activeTtl = useMemo(() => ttlOptions.find((option) => option.value === active?.ttl) || ttlOptions[2], [active]);
-  const canEdit = Boolean(active && (active.isOwner || active.permission === 'editable'));
+  const canEdit = Boolean(active);
 
   useEffect(() => {
     const timer = window.setInterval(() => setTick((value) => value + 1), 30_000);
@@ -124,13 +123,13 @@ export function WorkspaceView() {
 
   async function saveWorkspace(options: SaveOptions = {}) {
     if (!canEdit) {
-      setStatus('当前分享权限为只读');
+      setStatus('当前便签不可编辑');
       return;
     }
 
     const ttlValue = options.ttlOverride || activeTab.ttl;
     const ttl = ttlOptions.find((option) => option.value === ttlValue) || activeTtl;
-    const permission = options.permissionOverride || activeTab.permission;
+    const permission = 'editable';
     const password = options.passwordOverride ?? activeTab.password;
     const passwordProtected = options.passwordProtectedOverride ?? activeTab.passwordProtected;
 
@@ -221,10 +220,6 @@ export function WorkspaceView() {
     void saveWorkspace({ ttlOverride: ttl });
   }
 
-  function updatePermission(permission: Permission) {
-    updateWorkspace(activeTab.noteId, { permission, saveState: 'dirty' });
-  }
-
   function backHome() {
     reset();
     navigate('/');
@@ -252,7 +247,6 @@ export function WorkspaceView() {
             onCopyLink={copyLink}
             onCopyText={copyText}
             onDownload={download}
-            onPermissionChange={updatePermission}
             onSave={() => void saveWorkspace()}
             onTtlChange={updateTtl}
             tab={activeTab}

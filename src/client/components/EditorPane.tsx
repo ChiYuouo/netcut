@@ -24,7 +24,7 @@ export function EditorPane({ content, readonly, onContentChange }: EditorPanePro
           disabled={readonly}
           id="netcut-editor"
           onChange={(event) => onContentChange(event.target.value)}
-          placeholder={readonly ? '当前分享权限为只读' : '在这里输入或粘贴内容...'}
+          placeholder={readonly ? '当前内容不可编辑' : '在这里输入或粘贴内容...'}
           spellCheck={false}
           value={content}
         />
