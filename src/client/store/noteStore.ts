@@ -52,9 +52,9 @@ type NoteStore = {
 
 export const ttlOptions: Array<{ value: TtlPreset; label: string; seconds: number | null; burn: boolean }> = [
   { value: 'burn', label: '阅后即焚', seconds: 60 * 60 * 24, burn: true },
-  { value: '1h', label: '1小时', seconds: 60 * 60, burn: false },
-  { value: '1d', label: '1天', seconds: 60 * 60 * 24, burn: false },
-  { value: '3d', label: '3天', seconds: 60 * 60 * 24 * 3, burn: false },
+  { value: '1h', label: '1 小时', seconds: 60 * 60, burn: false },
+  { value: '1d', label: '1 天', seconds: 60 * 60 * 24, burn: false },
+  { value: '3d', label: '3 天', seconds: 60 * 60 * 24 * 3, burn: false },
   { value: 'forever', label: '永久', seconds: null, burn: false },
 ];
 

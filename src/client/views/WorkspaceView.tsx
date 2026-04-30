@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
+import type { ReactNode } from 'react';
+import { AlignLeft, Clock, Lock, Trash2 } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { burnNote, fetchNote, saveNote } from '../api';
 import { EditorPane } from '../components/EditorPane';
@@ -55,20 +57,20 @@ export function WorkspaceView() {
   }, [noteId]);
 
   if (!active) {
-    return <div className="grid min-h-screen place-items-center bg-slate-100 text-slate-500">正在打开工作台...</div>;
+    return <div className="app-surface grid min-h-screen place-items-center text-slate-500">正在打开工作台...</div>;
   }
 
   const activeTab = active;
 
   async function loadWorkspace(targetNoteId: string, password?: string) {
-    setStatus('正在读取云便签...');
+    setStatus('正在读取云端剪切板...');
     setPasswordError('');
 
     try {
       const note = await fetchNote(targetNoteId);
       if (note.password_protected && !password) {
         setPasswordDialog('unlock');
-        setStatus('该便签需要密码');
+        setStatus('该剪切板需要密码');
         return;
       }
 
@@ -95,7 +97,7 @@ export function WorkspaceView() {
     } catch (error) {
       if (error instanceof Error && error.message.includes('404')) {
         setLoadedNames((value) => new Set(value).add(targetNoteId));
-        setStatus(`已新建云便签 ${targetNoteId}`);
+        setStatus(`已新建云端剪切板 ${targetNoteId}`);
         return;
       }
 
@@ -108,7 +110,7 @@ export function WorkspaceView() {
 
       setPasswordError('');
       setLoadedNames((value) => new Set(value).add(targetNoteId));
-      setStatus('读取失败：该名称下的数据无法用名称钥匙打开');
+      setStatus('读取失败：该名称下的数据无法用名称密钥打开');
     }
   }
 
@@ -123,7 +125,7 @@ export function WorkspaceView() {
 
   async function saveWorkspace(options: SaveOptions = {}) {
     if (!canEdit) {
-      setStatus('当前便签不可编辑');
+      setStatus('当前剪切板不可编辑');
       return;
     }
 
@@ -226,8 +228,8 @@ export function WorkspaceView() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-100 text-slate-900">
-      <div className="mx-auto flex min-h-screen w-full max-w-[1500px] flex-col gap-4 px-4 py-4 sm:px-6 lg:px-8">
+    <div className="app-surface min-h-screen text-slate-900">
+      <div className="mx-auto flex min-h-screen w-full max-w-7xl flex-col gap-6 px-4 py-4 pb-24 sm:px-6 lg:px-8 lg:pb-8">
         <Header
           activeId={activeId}
           onAdd={addWorkspaceTab}
@@ -240,7 +242,7 @@ export function WorkspaceView() {
           tabs={workspaceTabs}
         />
 
-        <main className="grid min-h-0 flex-1 gap-4 lg:grid-cols-[minmax(0,1fr)_21rem]">
+        <main className="grid min-h-0 flex-1 gap-6 lg:grid-cols-[minmax(0,1fr)_21rem]">
           <EditorPane content={activeTab.content} onContentChange={updateContent} readonly={!canEdit} />
           <Sidebar
             countdown={formatRemaining(activeTab.expiresAt)}
@@ -255,7 +257,14 @@ export function WorkspaceView() {
         </main>
       </div>
 
-      <div className="pointer-events-none fixed bottom-4 left-1/2 z-40 max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded-lg border border-slate-200 bg-white/95 px-4 py-2 text-sm text-slate-600 shadow-xl backdrop-blur">
+      <nav className="glass-panel fixed bottom-4 left-4 right-4 z-40 grid h-16 grid-cols-4 items-center rounded-2xl px-2 shadow-xl md:hidden">
+        <MobileAction icon={<Clock size={22} />} label="保存" onClick={() => void saveWorkspace()} />
+        <MobileAction icon={<AlignLeft size={22} />} label="复制" onClick={() => void copyText()} active />
+        <MobileAction icon={<Lock size={22} />} label="加密" onClick={() => setPasswordDialog('set')} />
+        <MobileAction icon={<Trash2 size={22} />} label="清空" onClick={() => updateContent('')} danger />
+      </nav>
+
+      <div className="pointer-events-none fixed bottom-24 left-1/2 z-40 max-w-[calc(100vw-2rem)] -translate-x-1/2 rounded-xl border border-white/80 bg-white/90 px-4 py-2 text-sm text-slate-600 shadow-xl backdrop-blur md:bottom-4">
         {activeTab.error || status}
         <span className="sr-only">{tick}</span>
       </div>
@@ -270,6 +279,37 @@ export function WorkspaceView() {
         />
       ) : null}
     </div>
+  );
+}
+
+function MobileAction({
+  icon,
+  label,
+  onClick,
+  active,
+  danger,
+}: {
+  icon: ReactNode;
+  label: string;
+  onClick: () => void;
+  active?: boolean;
+  danger?: boolean;
+}) {
+  return (
+    <button
+      className={`mx-auto flex h-14 w-16 flex-col items-center justify-center rounded-xl text-[10px] font-bold transition ${
+        active
+          ? 'relative -top-2 border border-blue-600/20 bg-blue-600/10 text-blue-600 shadow-sm'
+          : danger
+            ? 'text-slate-500 hover:bg-white/60 hover:text-red-500'
+            : 'text-slate-500 hover:bg-white/60 hover:text-blue-600'
+      }`}
+      onClick={onClick}
+      type="button"
+    >
+      {icon}
+      <span className="mt-1">{label}</span>
+    </button>
   );
 }
 

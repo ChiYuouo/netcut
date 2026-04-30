@@ -20,9 +20,9 @@ export function formatRemaining(target?: string | null): string {
   const hours = Math.floor((totalMinutes % 1440) / 60);
   const minutes = totalMinutes % 60;
 
-  if (days > 0) return `剩余 ${days}天 ${hours}小时`;
-  if (hours > 0) return `剩余 ${hours}小时 ${minutes}分钟`;
-  return `剩余 ${minutes}分钟`;
+  if (days > 0) return `剩余 ${days} 天 ${hours} 小时`;
+  if (hours > 0) return `剩余 ${hours} 小时 ${minutes} 分钟`;
+  return `剩余 ${minutes} 分钟`;
 }
 
 export function countWords(text: string): number {

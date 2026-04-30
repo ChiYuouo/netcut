@@ -17,7 +17,7 @@ const saveLabels: Record<SaveState, string> = {
   idle: '待保存',
   dirty: '有修改',
   saving: '保存中',
-  saved: '保存成功',
+  saved: '已保存',
   error: '保存失败',
 };
 
@@ -25,23 +25,23 @@ export function Header({ tabs, activeId, onAdd, onBack, onClear, onClose, onPass
   const active = tabs.find((tab) => tab.localId === activeId) || tabs[0];
 
   return (
-    <header className="rounded-2xl border border-slate-200 bg-white/95 p-3 shadow-sm backdrop-blur-xl">
+    <header className="glass-panel sticky top-4 z-30 rounded-2xl px-4 py-3">
       <div className="flex flex-col gap-3 xl:flex-row xl:items-center">
         <div className="flex min-w-0 items-center gap-3">
           <button
-            className="grid size-10 shrink-0 place-items-center rounded-lg border border-slate-200 bg-white text-slate-700 transition hover:border-blue-300 hover:text-blue-600"
+            className="glass-button grid size-10 shrink-0 place-items-center rounded-full text-slate-600"
             onClick={onBack}
             title="返回首页"
             type="button"
           >
-            <ArrowLeft size={17} />
+            <ArrowLeft size={19} />
           </button>
-          <div className="grid size-10 shrink-0 place-items-center rounded-lg bg-blue-600 text-lg font-black text-white shadow-md">
+          <div className="grid size-10 shrink-0 place-items-center rounded-xl bg-primary font-heading text-lg font-black text-white shadow-md shadow-blue-600/20">
             N
           </div>
           <div className="min-w-0">
-            <div className="text-base font-bold tracking-normal text-slate-950">NetCut</div>
-            <div className="truncate text-xs text-slate-500">当前名称：{active.noteId}</div>
+            <div className="font-heading text-lg font-extrabold tracking-normal text-slate-950">NetCut</div>
+            <div className="truncate text-xs text-slate-500">当前名称：{active?.noteId}</div>
           </div>
         </div>
 
@@ -50,10 +50,10 @@ export function Header({ tabs, activeId, onAdd, onBack, onClear, onClose, onPass
             const isActive = tab.localId === activeId;
             return (
               <button
-                className={`group flex h-10 min-w-32 max-w-52 items-center gap-2 rounded-lg border px-3 text-sm transition-all ${
+                className={`group flex h-10 min-w-32 max-w-56 items-center gap-2 rounded-xl border px-3 text-sm transition-all ${
                   isActive
-                    ? 'border-blue-500 bg-blue-50 text-blue-700 shadow-sm'
-                    : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-slate-300 hover:bg-white'
+                    ? 'border-blue-500/40 bg-blue-50/90 text-blue-700 shadow-sm'
+                    : 'border-white/70 bg-white/45 text-slate-600 hover:border-blue-200 hover:bg-white/80'
                 }`}
                 key={tab.localId}
                 onClick={() => onSelect(tab.localId)}
@@ -82,7 +82,7 @@ export function Header({ tabs, activeId, onAdd, onBack, onClear, onClose, onPass
             );
           })}
           <button
-            className="grid size-10 shrink-0 place-items-center rounded-lg border border-slate-200 bg-white text-slate-600 transition hover:border-blue-400 hover:text-blue-600"
+            className="glass-button grid size-10 shrink-0 place-items-center rounded-xl text-slate-600 hover:text-blue-600"
             onClick={onAdd}
             title="在当前名称下新建标签"
             type="button"
@@ -93,25 +93,25 @@ export function Header({ tabs, activeId, onAdd, onBack, onClear, onClose, onPass
 
         <div className="grid grid-cols-2 gap-2 sm:flex sm:items-center">
           <button
-            className="flex h-10 items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-3 text-sm text-slate-700 transition hover:border-blue-300 hover:text-blue-600"
+            className="glass-button flex h-10 items-center justify-center gap-2 rounded-xl px-3 text-sm font-semibold text-slate-700 hover:text-blue-600"
             onClick={onPassword}
             type="button"
           >
             <LockKeyhole size={16} />
-            设置密码
+            密码
           </button>
           <div
-            className={`flex h-10 items-center justify-center gap-2 rounded-lg border px-3 text-sm ${
-              active.saveState === 'saved'
+            className={`flex h-10 items-center justify-center gap-2 rounded-xl border px-3 text-sm font-semibold ${
+              active?.saveState === 'saved'
                 ? 'border-emerald-200 bg-emerald-50 text-emerald-700'
-                : 'border-slate-200 bg-slate-50 text-slate-500'
+                : 'border-white/70 bg-white/45 text-slate-500'
             }`}
           >
             <ShieldCheck size={16} />
-            {saveLabels[active.saveState]}
+            {active ? saveLabels[active.saveState] : saveLabels.idle}
           </div>
           <button
-            className="flex h-10 items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-3 text-sm text-slate-700 transition hover:border-red-300 hover:text-red-600"
+            className="glass-button flex h-10 items-center justify-center gap-2 rounded-xl px-3 text-sm font-semibold text-slate-700 hover:text-red-600"
             onClick={onClear}
             type="button"
           >
@@ -119,8 +119,8 @@ export function Header({ tabs, activeId, onAdd, onBack, onClear, onClose, onPass
             清空
           </button>
           <button
-            className="flex h-10 items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-500"
-            disabled={active.saveState === 'saving'}
+            className="flex h-10 items-center justify-center gap-2 rounded-xl bg-primary px-4 text-sm font-semibold text-white shadow-sm shadow-blue-600/20 transition hover:bg-blue-700 disabled:opacity-60"
+            disabled={active?.saveState === 'saving'}
             onClick={onSave}
             type="button"
           >
